@@ -1,0 +1,38 @@
+*********************
+Solution 1: Game with String
+-------------------
+class Solution {
+    public int minValue(String s, int k) {
+        // code here
+        Map<String, Integer> charaterCount = new HashMap<>();
+        
+        String maxChar="";
+        int maxCount=0;
+        int output = 0;
+        
+        for (String cs: s.split("")) {
+            // System.out.println(cs);
+            Integer val = charaterCount.getOrDefault(cs, 0);
+            val = val + 1;
+            if (val > maxCount) {
+                maxCount = val;
+            }
+            charaterCount.put(cs, val);
+        }
+        PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.reverseOrder());
+        queue.addAll(charaterCount.values());
+        
+        for (int i =0 ; i < k; i++) {
+            queue.add(queue.poll() - 1);
+        }
+        
+        
+        while(!queue.isEmpty()) {
+            int value = queue.poll();
+            output = output + (value * value);
+        }
+
+        
+        return output;
+    }
+}
