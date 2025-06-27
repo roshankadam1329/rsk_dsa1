@@ -36,3 +36,58 @@ class Solution {
         return output;
     }
 }
+
+
+*********************
+Solution 2: Peak element
+-------------------
+
+class Solution {
+
+    public int peakElement(int[] arr) {
+        //solution 1
+        // // code here
+        // int maxNumber = arr[0];
+        // int maxIndex = 0;
+        
+        // for (int i = 0; i < arr.length;i++) {
+        //     if (maxNumber < arr[i]) {
+        //         maxNumber = arr[i];
+        //         maxIndex = i;
+        //     }
+        // }
+        // return maxIndex;
+        
+        //solution 2
+        int n = arr.length;
+        if (arr.length == 1) {
+            return 0;
+        }
+        if (arr[0] > arr[1]) {
+            return 0;
+        }
+        if (arr[n - 1] > arr[n - 2]) {
+            return n - 1;
+        }
+        int h = n - 2;
+        int l = 1;
+        int mid = (h + l) / 2;
+        while (h >= l) {
+            mid = (h + l) / 2;
+            // if peak
+            if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1] ) {
+                return mid;
+            }
+            
+            // next is large
+            if (arr[mid] < arr[mid + 1]) {
+                l = mid + 1;
+            } else {
+                // left 
+                h = mid - 1;
+            }
+            
+        }
+        return mid;
+    }
+}
