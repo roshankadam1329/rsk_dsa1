@@ -91,3 +91,50 @@ class Solution {
         return mid;
     }
 }
+
+******************************************
+SOLUTION 3: Check if frequencies can be equal
+--------------------------------------------
+class Solution {
+    boolean sameFreq(String s) {
+        // code here
+        Map<String, Integer> charCount = new HashMap<>();
+        
+        for (String ch : s.split("")) {
+            Integer count = charCount.getOrDefault(ch, 0);
+            count = count + 1;
+            charCount.put(ch, count);
+        }
+        
+        Map<Integer, Integer> countFreq = new HashMap<>();
+        
+        for (Integer i : charCount.values()) {
+            Integer count = countFreq.getOrDefault(i, 0);
+            count = count + 1;
+            countFreq.put(i, count);
+        }
+        if (countFreq.size() == 1) {
+            return true;
+        }
+        
+        if (countFreq.size() == 2) {
+            List<Integer> frList = new ArrayList(countFreq.keySet());
+            int f1 = frList.get(0);
+            int f2 = frList.get(1);
+            int c1 = countFreq.get(f1);
+            int c2 = countFreq.get(f2);
+            
+            if (f2 < f1) {
+                int tf = f1; f1 = f2; f2 = tf;
+                int tc = c1; c1 = c2; c2 = tc;
+            }
+            
+            if ((f1 == 1 && c1 == 1) || (f2 == f1 + 1 && c2 == 1) ) {
+                return true;
+            }
+        }
+
+        
+        return false;
+    }
+}
